@@ -16,6 +16,9 @@
 export interface Launch {
   id: string;
   name: string;
+  failures: Array<{
+    reason: string;
+  }>;
     details: string | null;
     date_utc: string;
     success: boolean | null;
@@ -24,5 +27,6 @@ export interface Launch {
         small: string | null;
         };
         webcast: string | null;
+        wikipedia: string | null;
     };
 }

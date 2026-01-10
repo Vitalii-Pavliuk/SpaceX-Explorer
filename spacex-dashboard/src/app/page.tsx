@@ -1,15 +1,20 @@
-import {getLaunches} from "../lib/api";
-import Test from "../components/test";
+import { getLaunches } from "../lib/api";
+import { LaunchCard } from "../components/LaunchCard";
 
-export default function Home() {
-    
-console.log(getLaunches());
+export default async function Home() {
+  const launches = await getLaunches();
 
   return (
-
-  <>
-  <h1>see ya in space</h1>
-  <Test />
-  </>
+    <main>
+      <div>
+        <h1>SpaceX Launches 🚀</h1>
+        <p>Всього запусків: {launches.length}</p>
+      </div>
+      <div>
+        {launches.map((launch) => (
+          <LaunchCard key={launch.id} launch={launch} />
+        ))}
+      </div>
+    </main>
   );
 }
