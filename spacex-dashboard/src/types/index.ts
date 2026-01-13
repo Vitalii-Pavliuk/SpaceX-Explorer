@@ -30,3 +30,39 @@ export interface Launch {
         wikipedia: string | null;
     };
 }
+export interface Rocket {
+  id: string;
+  name: string;
+  description: string;
+  first_flight: string;
+  flickr_images: string[];
+  success_rate_pct: number;
+  cost_per_launch: number;
+  active: boolean;
+  height: {
+    meters: number | null; 
+  };
+  diameter: {
+    meters: number | null;
+  };
+  mass: {
+    kg: number;
+  };
+  first_stage: {
+    reusable: boolean;
+    engines: number;
+    fuel_amount_tons: number;
+    burn_time_sec: number | null;
+  };
+  second_stage: {
+    reusable: boolean;
+    engines: number;
+    fuel_amount_tons: number;
+    burn_time_sec: number | null;
+  };
+  payload_weights: {
+    id: string;
+    name: string;
+    kg: number;
+  }[];
+}

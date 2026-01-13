@@ -15,7 +15,7 @@ export default async function LaunchPage({ params }: Props) {
 
   return (
     <div>
-      <Link href="/">
+      <Link href="/launches">
         ← Back to Launches
       </Link>
 

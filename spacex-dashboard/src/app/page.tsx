@@ -1,20 +1,18 @@
 import { getLaunches } from "../lib/api";
 import { LaunchCard } from "../components/LaunchCard";
+import Link from "next/link";
 
 export default async function Home() {
   const launches = await getLaunches();
 
   return (
     <main>
-      <div>
-        <h1>SpaceX Launches 🚀</h1>
-        <p>Всього запусків: {launches.length}</p>
-      </div>
-      <div>
-        {launches.map((launch) => (
-          <LaunchCard key={launch.id} launch={launch} />
-        ))}
-      </div>
+        <Link href="/launches">
+        Open launcehs list
+      </Link>
+        <Link href="/rockets">
+        Open rockets list
+      </Link>
     </main>
   );
 }
