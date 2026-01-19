@@ -22,6 +22,7 @@ export interface Launch {
     details: string | null;
     date_utc: string;
     success: boolean | null;
+    rocket: string | { id: string; name: string };
     links: {
       patch: {
         small: string | null;

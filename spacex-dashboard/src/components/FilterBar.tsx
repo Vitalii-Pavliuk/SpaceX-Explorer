@@ -1,7 +1,16 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
 
-export const FilterBar = () => {
+interface Rocket {
+  id: string;
+  name: string;
+}
+
+interface Props {
+  rockets: Rocket[];
+}
+
+export const FilterBar = ({ rockets }: Props) => {
  const router = useRouter();
 const searchParams = useSearchParams();
 const isOldestFirst = searchParams.get("sort") === "asc";
@@ -28,6 +37,17 @@ const isOldestFirst = searchParams.get("sort") === "asc";
         <option value="success">Success Only</option>
         <option value="failed">Failed Only</option>
 </select>
+
+<select onChange={(e) => updateFilter("rocket", e.target.value)}
+        defaultValue={searchParams.get("rocket") || ""}>
+<option value="">All Rockets</option>
+        {rockets.map((rocket) => (
+          <option key={rocket.id} value={rocket.id}>
+            {rocket.name}
+          </option>
+        ))}
+</select>
+
 <p>From</p>
 <input type="date" onChange={(e) => updateFilter("from", e.target.value)}
         defaultValue={searchParams.get("from") || ""}></input>  

@@ -1,4 +1,4 @@
-import { getLaunches } from "../../lib/api";
+import { getLaunches, getRockets } from "../../lib/api";
 import { LaunchCard } from "../../components/LaunchCard";
 import Link from "next/link";
 import { FilterBar } from "../../components/FilterBar";
@@ -13,6 +13,7 @@ type Props = {
     sort?: string;
     from?: string; 
     to?: string;
+    rocket?: string;
   }>; 
 };
 
@@ -20,7 +21,11 @@ export default async function Home({ searchParams }: Props) {
   const params = await searchParams;
   const currentPage = Number(params.page) || 1;
 
-  const allLaunches = await getLaunches();
+  const [allLaunches, allRockets] = await Promise.all([
+    getLaunches(),
+    getRockets(),
+  ]);
+
   if (params.sort !== "asc") {
     allLaunches.sort((a, b) => new Date(b.date_utc).getTime() - new Date(a.date_utc).getTime());
   }
@@ -30,6 +35,13 @@ export default async function Home({ searchParams }: Props) {
     filteredLaunches = filteredLaunches.filter((launch) => launch.success === true);
   } else if (params.status === "failed") {
     filteredLaunches = filteredLaunches.filter((launch) => launch.success === false);
+  }
+
+  if (params.rocket) {
+    filteredLaunches = filteredLaunches.filter((launch) => {
+      const rocketId = typeof launch.rocket === 'string' ? launch.rocket : launch.rocket.id;
+      return rocketId === params.rocket;
+    });
   }
 
 if (params.from) {
@@ -53,8 +65,12 @@ if (params.to) {
   const getPageUrl = (pageNumber: number) => {
     const query = new URLSearchParams();
     if (params.status) query.set("status", params.status);
+    if (params.rocket) query.set("rocket", params.rocket);
+    if (params.from) query.set("from", params.from);
+    if (params.to) query.set("to", params.to);
+    if (params.sort) query.set("sort", params.sort);
     query.set("page", pageNumber.toString());
-    return `/?${query.toString()}`;
+    return `/launches?${query.toString()}`;
   };
 
 return (
@@ -66,7 +82,7 @@ return (
       </div>
   <div>
     <h1>SpaceX Launches</h1>
-    <FilterBar />
+    <FilterBar rockets={allRockets.map(r => ({ id: r.id, name: r.name }))} />
     <div>
       {currentLaunches.length > 0 ? (
         currentLaunches.map((launch) => (

@@ -3,19 +3,39 @@ import { Rocket } from "../types";
 import { Crew } from "../types";
 
 export const getLaunches = async (): Promise<Launch[]> => {
-  const res = await fetch('https://api.spacexdata.com/v4/launches', {
-    next: { revalidate: 3600 },
+  const res = await fetch('https://api.spacexdata.com/v4/launches/query', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      query: {},
+      options: {
+        populate: [
+          {
+            path: 'rocket',
+            select: {
+              name: 1,
+              id: 1,
+            }
+          }
+        ],
+        pagination: false,
+      }
+    }),
+    next: { revalidate: 86400 },
   });
   if (!res.ok) {
      throw new Error('Failed to fetch launches');
   }
-  return res.json();
+  const data = await res.json();
+  return data.docs;
 }
 
 export const getLaunch = async (id: string): Promise<Launch> => {
   const url = `https://api.spacexdata.com/v4/launches/${id}`;
   const res = await fetch(url, {
-    next: { revalidate: 3600 },
+    next: { revalidate: 86400 },
   });
 
   if (!res.ok) {
@@ -27,7 +47,7 @@ export const getLaunch = async (id: string): Promise<Launch> => {
 
 export const getRockets = async (): Promise<Rocket[]> => {
   const res = await fetch('https://api.spacexdata.com/v4/rockets', {
-    next: { revalidate: 3600 },
+    next: { revalidate: 86400 },
   });
   if (!res.ok) {
      throw new Error('Failed to fetch rockets');
@@ -38,7 +58,7 @@ export const getRockets = async (): Promise<Rocket[]> => {
 export const getRocket = async (id: string): Promise<Rocket> => {
   const url = `https://api.spacexdata.com/v4/rockets/${id}`;
   const res = await fetch(url, {
-    next: { revalidate: 3600 },
+    next: { revalidate: 86400 },
   });
 
   if (!res.ok) {
@@ -50,7 +70,7 @@ export const getRocket = async (id: string): Promise<Rocket> => {
 
 export const getCrew = async (): Promise<Crew[]> => {
   const res = await fetch('https://api.spacexdata.com/v4/crew', {
-    next: { revalidate: 3600 },
+    next: { revalidate: 86400 },
   });
   if (!res.ok) {
      throw new Error('Failed to fetch crew');
@@ -61,7 +81,7 @@ export const getCrew = async (): Promise<Crew[]> => {
 export const getCrewMember = async (id: string): Promise<Crew> => {
   const url = `https://api.spacexdata.com/v4/crew/${id}`;
   const res = await fetch(url, {
-    next: { revalidate: 3600 },
+    next: { revalidate: 86400 },
   });
 
   if (!res.ok) {

@@ -3,12 +3,14 @@ import Link from "next/link";
 import { format } from "date-fns"; 
 import { Launch } from "../types";
 
+
 interface Props {
   launch: Launch;
 }
 
 export const LaunchCard = ({ launch }: Props) => {
   const patchImage = launch.links.patch.small || null;
+  const rocketName = typeof launch.rocket === 'string' ? launch.rocket : launch.rocket.name;
 
   return (
     <Link 
@@ -34,6 +36,7 @@ export const LaunchCard = ({ launch }: Props) => {
           <span>
             {launch.success ? "Success" : "Failure"}
           </span>
+          <p>{rocketName}</p>
         </div>
 
         <div>
