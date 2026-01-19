@@ -30,7 +30,7 @@ const isOldestFirst = searchParams.get("sort") === "asc";
 </select>
 <p>From</p>
 <input type="date" onChange={(e) => updateFilter("from", e.target.value)}
-        defaultValue={searchParams.get("from") || ""}></input>
+        defaultValue={searchParams.get("from") || ""}></input>  
 <p>TO</p>
 <input type="date" onChange={(e) => updateFilter("to", e.target.value)}
         defaultValue={searchParams.get("to") || ""}></input>

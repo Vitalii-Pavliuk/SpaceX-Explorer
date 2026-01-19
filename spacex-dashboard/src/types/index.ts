@@ -66,3 +66,13 @@ export interface Rocket {
     kg: number;
   }[];
 }
+
+export interface Crew {
+  id: string;
+  name: string;
+  agency: string;
+  wikipedia: string | null;
+  image: string | null;
+  status: string;
+  launches: string[];
+};

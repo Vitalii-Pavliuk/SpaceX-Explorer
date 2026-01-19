@@ -10,6 +10,10 @@ export default async function Home() {
         <Link href="/rockets">
         Open rockets list
       </Link>
+       <br />
+              <Link href="/crew">
+        Open crew list
+      </Link>
     </main>
   );
 }

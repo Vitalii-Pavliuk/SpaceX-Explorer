@@ -2,7 +2,7 @@ import { getRockets } from "../../lib/api";
 import { RocketCard } from "../../components/RocketCard";
 import Link from "next/link";
 
-export default async function Home() {
+export default async function Rockets() {
   const rocketes = await getRockets();
 
   return (
