@@ -1,7 +1,7 @@
 import { getLaunches, getRockets } from "../../lib/api";
-import { LaunchCard } from "../../components/LaunchCard";
+import { LaunchCard } from "../../components/LaunchCard/LaunchCard";
 import Link from "next/link";
-import { FilterBar } from "../../components/FilterBar";
+import { FilterBar } from "../../components/FilterBar/FilterBar";
 import { fromUnixTime } from "date-fns";
 
 const ITEMS_PER_PAGE = 20;

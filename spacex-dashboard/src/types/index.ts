@@ -27,10 +27,18 @@ export interface Launch {
       patch: {
         small: string | null;
         };
+        reddit: { 
+          campaign: string | null;
+          launch: string | null;
+         recovery: string | null;
+        };
+        flickr: {
+          original: string[];
+        };
         webcast: string | null;
         wikipedia: string | null;
+  },
     };
-}
 export interface Rocket {
   id: string;
   name: string;

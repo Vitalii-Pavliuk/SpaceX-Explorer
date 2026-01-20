@@ -2,6 +2,7 @@ import { getLaunch } from "../../../lib/api";
 import { format } from "date-fns";
 import Image from "next/image";
 import Link from "next/link";
+import "./page.scss";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -35,7 +36,7 @@ export default async function LaunchPage({ params }: Props) {
 
         <div>
             <div>
-                 {launch.links.patch.small ? (
+                 {launch.links.patch.small && launch.links.patch.small.trim() !== "" ? (
                     <Image 
                         src={launch.links.patch.small} 
                         alt={launch.name}
@@ -43,7 +44,26 @@ export default async function LaunchPage({ params }: Props) {
                         height={200}
                     />
                  ) : (
-                    <div>No Image</div>
+                    <div>No Patch Image</div>
+                 )}
+            </div>
+
+            <div className="flickr-gallery">
+                 {launch.links.flickr.original && launch.links.flickr.original.length > 0 ? (
+                    launch.links.flickr.original
+                      .filter(url => url && url.trim() !== "")
+                      .map((imageUrl, index) => (
+                        <div key={index} className="flickr-gallery__item">
+                          <Image
+                            src={imageUrl} 
+                            alt={`${launch.name} - Photo ${index + 1}`}
+                            width={300}
+                            height={300}
+                          />
+                        </div>
+                      ))
+                 ) : (
+                    <div>No Flickr Images</div>
                  )}
             </div>
 
@@ -71,6 +91,11 @@ export default async function LaunchPage({ params }: Props) {
                     {launch.links.wikipedia && (
                         <a href={launch.links.wikipedia} target="_blank">
                             Wikipedia
+                        </a>
+                    )}
+                        {launch.links.reddit.campaign && (
+                        <a href={launch.links.reddit.campaign} target="_blank">
+                            Reddit
                         </a>
                     )}
                 </div>

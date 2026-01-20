@@ -1,7 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { format } from "date-fns"; 
-import { Launch } from "../types";
+import { Launch } from "../../types";
+import "./LaunchCard.scss";
 
 
 interface Props {
@@ -15,10 +16,10 @@ export const LaunchCard = ({ launch }: Props) => {
   return (
     <Link 
       href={`/launch/${launch.id}`}
+      className="launch-card-link"
     >
-      <div>
-        <div>
-          <div>
+      <div className="launch-card">
+                  <div className="launch-card__image">
             {patchImage ? (
               <Image 
                 src={patchImage} 
@@ -27,23 +28,24 @@ export const LaunchCard = ({ launch }: Props) => {
                 height={64}
               />
             ) : (
-              <div>
+              <div className="launch-card__image-placeholder">
                 No IMG
               </div>
             )}
           </div>
+        <div className="launch-card__header">
           
-          <span>
+          <span className="launch-card__status">
             {launch.success ? "Success" : "Failure"}
           </span>
-          <p>{rocketName}</p>
+          <p className="launch-card__rocket">{rocketName}</p>
         </div>
 
-        <div>
-            <p>
+        <div className="launch-card__body">
+            <p className="launch-card__date">
                 {format(new Date(launch.date_utc), "dd.MM.yyyy")}
             </p>
-            <h2>
+            <h2 className="launch-card__title">
                 {launch.name}
             </h2>
         </div>
