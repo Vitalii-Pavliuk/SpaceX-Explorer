@@ -77,7 +77,7 @@ return (
   <div>
       <div>
         <Link href="/">
-        ← Back to Rockets
+        ← Back to main page
       </Link>
       </div>
   <div>

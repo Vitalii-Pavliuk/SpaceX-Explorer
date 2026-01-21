@@ -13,75 +13,97 @@
 // }
 
 
+export interface Core {
+  core: string | null;
+  flight: number;
+  gridfins: boolean | null;
+  legs: boolean | null;
+  reused: boolean | null;
+  landing_attempt: boolean | null;
+  landing_success: boolean | null;
+  landing_type: string | null;
+  landpad: string | null;
+}
+
 export interface Launch {
   id: string;
   name: string;
+  flight_number: number;
   failures: Array<{
     reason: string;
   }>;
-    details: string | null;
-    date_utc: string;
-    success: boolean | null;
-    rocket: string | { id: string; name: string };
-    links: {
-      patch: {
-        small: string | null;
-        };
-        reddit: { 
-          campaign: string | null;
-          launch: string | null;
-         recovery: string | null;
-        };
-        flickr: {
-          original: string[];
-        };
-        webcast: string | null;
-        wikipedia: string | null;
-  },
+  details: string | null;
+  date_utc: string;
+  success: boolean | null;
+  rocket: string | { id: string; name: string };
+  cores: Core[];
+  links: {
+    patch: {
+      small: string | null;
+      large: string | null;
     };
-export interface Rocket {
+    reddit: { 
+      campaign: string | null;
+      launch: string | null;
+      recovery: string | null;
+    };
+    flickr: {
+      original: string[];
+    };
+    webcast: string | null;
+    youtube_id: string | null;
+    article: string | null;
+    wikipedia: string | null;
+  };
+}export interface Rocket {
   id: string;
   name: string;
-  description: string;
-  first_flight: string;
-  flickr_images: string[];
-  success_rate_pct: number;
-  cost_per_launch: number;
+  type: string;
   active: boolean;
-  height: {
-    meters: number | null; 
-  };
-  diameter: {
-    meters: number | null;
-  };
-  mass: {
-    kg: number;
-  };
+  stages: number;
+  boosters: number;
+  cost_per_launch: number;
+  success_rate_pct: number;
+  first_flight: string;
+  country: string;
+  company: string;
+  wikipedia: string;
+  description: string;
+  
+  height: { meters: number | null; feet: number | null };
+  diameter: { meters: number | null; feet: number | null };
+  mass: { kg: number; lb: number };
+  
   first_stage: {
     reusable: boolean;
     engines: number;
     fuel_amount_tons: number;
     burn_time_sec: number | null;
   };
+  
   second_stage: {
     reusable: boolean;
     engines: number;
     fuel_amount_tons: number;
     burn_time_sec: number | null;
   };
-  payload_weights: {
+  
+  payload_weights: Array<{
     id: string;
     name: string;
     kg: number;
-  }[];
+    lb: number;
+  }>;
+  
+  flickr_images: string[];
 }
 
 export interface Crew {
   id: string;
   name: string;
-  agency: string;
-  wikipedia: string | null;
-  image: string | null;
   status: string;
+  agency: string;
+  image: string;
+  wikipedia: string;
   launches: string[];
-};
+}

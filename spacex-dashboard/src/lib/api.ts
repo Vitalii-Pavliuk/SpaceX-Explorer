@@ -33,8 +33,27 @@ export const getLaunches = async (): Promise<Launch[]> => {
 }
 
 export const getLaunch = async (id: string): Promise<Launch> => {
-  const url = `https://api.spacexdata.com/v4/launches/${id}`;
-  const res = await fetch(url, {
+  const res = await fetch('https://api.spacexdata.com/v4/launches/query', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      query: {
+        _id: id,
+      },
+      options: {
+        populate: [
+          {
+            path: 'rocket',
+            select: {
+              name: 1,
+              id: 1,
+            }
+          }
+        ],
+      }
+    }),
     next: { revalidate: 86400 },
   });
 
@@ -42,7 +61,8 @@ export const getLaunch = async (id: string): Promise<Launch> => {
     throw new Error('Failed to fetch launch');
   }
 
-  return res.json();
+  const data = await res.json();
+  return data.docs[0];
 };
 
 export const getRockets = async (): Promise<Rocket[]> => {

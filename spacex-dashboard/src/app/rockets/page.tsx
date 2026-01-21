@@ -1,23 +1,24 @@
 import { getRockets } from "../../lib/api";
-import { RocketCard } from "../../components/RocketCard";
+import { RocketCard } from "../../components/RocketCard/RocketCard";
 import Link from "next/link";
+import "./page.scss";
 
 export default async function Rockets() {
   const rocketes = await getRockets();
 
   return (
-    <div>
-        <Link href="/">
-        ← Back to rocketes
+    <div className="rockets-page">
+      <Link href="/" className="back-link">
+        ← Back to main page
       </Link>
-      <div>
+      <header>
         <h1>SpaceX rocketes</h1>
-      </div>
-      <div>
+      </header>
+      <div className="rockets-grid">
         {rocketes.map((rocket) => (
           <RocketCard key={rocket.id} rocket={rocket} />
         ))}
       </div>
-        </div>
+    </div>
   );
 }

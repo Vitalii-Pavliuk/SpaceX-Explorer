@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { format } from "date-fns"; 
-import { Rocket } from "../types";
+import { Rocket } from "../../types";
 
 interface Props {
   rocket: Rocket;
@@ -38,6 +38,9 @@ export const RocketCard = ({ rocket }: Props) => {
             </p>
             <h2>
                 {rocket.name}
+            </h2>
+            <h2>
+            {rocket.active ? "Active" : "Inactive"}
             </h2>
         </div>
       </div>
